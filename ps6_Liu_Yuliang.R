@@ -20,4 +20,31 @@ data['Daytime_evening_attendance'] = as.character(data['Daytime_evening_attendan
 data['Nacionality'] = as.character(data['Nacionality'])
 data['Scholarship_holder'] = as.character(data['Scholarship_holder'])
 data['International'] = as.character(data['International'])
+ui <- fluidPage(
+  tabsetPanel(
+    tabPanel("Information",
+             h2("Students college and market index Dataset"),
+             p("This dataset contains information about individuals who have either dropped out of college, graduated, or are currently enrolled."),
+             p("Some important variables included in this dataset are:"),
+             HTML("<ul>
+                 <li>Target: College enrollment status (Dropout/Graduate/Enrolled)</li>
+                 <li>Marital Status: Whether the individual is married or not</li>
+                 <li>Age: Age of the individual</li>
+                 <li>Scholarship: Whether the individual holds any scholarship</li>
+                 <li>Grades: Semester-wise grade point average</li>
+                 <li>Unemployement rate: Percentage of people unemployeed</li>
+                 <li>Inflation rate: Price Index value</li>
+                 <li>GDP: Gross domestic product (Market Value)</li></ul>"),
+             br(),
+             # Add dataset information
+             p(paste("The dataset contains ", nrow(data), " rows and ", ncol(data), " columns.")),
+             br(),
+             h4("Data Quality"),
+             br(),
+             p(paste("The dataset contains ", sum(is.na(data)), " null values")),
+             br(),
+             h4("The count distribution for the target variable:"),
+             # Display frequency distribution for target variable
+             tableOutput("target_counts")
+    ),
 
