@@ -64,7 +64,8 @@ ui <- fluidPage(
                    
                  )
                )
-             )
+             ),
+             h4("Therefore, unemployment rate, inflation rate and GDP have nearly no relationship to the academic success of students.")
     ),
     
     tabPanel("Table",
@@ -82,4 +83,55 @@ ui <- fluidPage(
   )
 )
 
+# Define server
+server <- function(input, output) {
+  
+  
+  output$target_counts <- renderTable(
+    {
+      table(data$Target)
+    }
+  )
+  
+  output$corr_info <- renderPrint({
+    # Select the data based on x and y variable selections
+    cor <- data.frame(x = data[[input$xvar]], y = data[[input$yvar]], target = data$Target)
+    
+    # Compute the correlation value
+    corr <- cor(cor$x, cor$y)
+    
+    # Return the correlation information
+    paste("The correlation between", input$xvar, "and", input$yvar, "is", round(corr, 2))
+  })
+  
+  # Function to create scatter plot
+  createScatterPlot <- function(xvar, yvar, data) {
+    ggplot(data, aes_string(x = xvar, y = yvar, color = "Target")) + 
+      geom_point(size = 3) + 
+      labs(x = xvar, y = yvar, title = paste0("Scatter plot of ", xvar, " vs. ", yvar), color = "Target") +
+      theme_bw() +
+      theme(plot.title = element_text(hjust = 0.5, vjust = 1))
+  }
+  
+  # Scatter plot output
+  scatter_data <- reactive({
+    createScatterPlot(input$xvar, input$yvar, data)
+  })
+  
+  output$scatter_plot <- renderPlot({
+    scatter_data()
+  })
+  
+  output$pivot_table <- renderTable({
+    # Reshape the data into a pivot table
+    data_pivot <- dcast(data, input$col_select ~ Target,length )
+    
+    # Set the size of the table
+    options(paged.print = FALSE, width = 1000, height = 1000)
+    
+    data_pivot
+  })
+}
 
+# Run the application
+shinyApp(ui = ui, server = server)
