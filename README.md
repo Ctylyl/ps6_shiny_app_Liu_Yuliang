@@ -9,4 +9,6 @@ variable for comparison. The output is the correlation between the two variables
 The table displays a summary of variables and shows the number of dropout, enrolled or
 graduate of students. The widget controls the selection of variables.
 
+The shinyapp link is  https://yuliangliu.shinyapps.io/ps6_shiny_app_Liu_Yuliang/
+
 I spent 8 hours on ps6.

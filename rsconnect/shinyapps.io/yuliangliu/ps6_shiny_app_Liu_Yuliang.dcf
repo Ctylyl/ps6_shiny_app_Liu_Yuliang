@@ -5,9 +5,9 @@ account: yuliangliu
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8484359
-bundleId: 6919256
+bundleId: 6919289
 url: https://yuliangliu.shinyapps.io/ps6_shiny_app_Liu_Yuliang/
-when: 1678070004.83294
-lastSyncTime: 1678070004.83295
+when: 1678070644.45045
+lastSyncTime: 1678070644.45046
 asMultiple: FALSE
 asStatic: FALSE
