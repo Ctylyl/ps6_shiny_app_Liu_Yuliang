@@ -47,4 +47,39 @@ ui <- fluidPage(
              # Display frequency distribution for target variable
              tableOutput("target_counts")
     ),
+    tabPanel("Plot",
+             h3("Scatter plot"),
+             sidebarLayout(
+               sidebarPanel(
+                 width = 2,
+                 selectInput("xvar", "X-axis variable", choices = c("Unemployment_rate", "Inflation_rate", "GDP")),
+                 selectInput("yvar", "Y-axis variable", choices = c("Unemployment_rate", "Inflation_rate", "GDP"))
+               ),
+               mainPanel(
+                 fluidRow(
+                   offset = 2,
+                   width = 5,
+                   plotOutput("scatter_plot", height = "600px", width = "1000px"),
+                   verbatimTextOutput("corr_info")
+                   
+                 )
+               )
+             )
+    ),
+    
+    tabPanel("Table",
+             sidebarPanel(
+               h4("Pivot Table Filters"),
+               checkboxGroupInput("col_select",
+                                  "Select Columns to Summarize:",
+                                  choices = names(data)[sapply(data, is.character)],
+                                  selected = names(data)[sapply(data, is.character)][1:2]),
+             ),
+             h3("Value count by target variable"),
+             tableOutput("pivot_table")
+    )
+    
+  )
+)
+
 
